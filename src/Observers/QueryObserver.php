@@ -38,6 +38,8 @@ class QueryObserver
                     return;
                 }
 
+                [$uri, $method] = $this->getRequest();
+
                 $queries = [
                     'sql'            => $sql,
                     'duplicated'     => $duplicated,
@@ -45,6 +47,8 @@ class QueryObserver
                     'database'       => $query->connection->getDatabaseName(),
                     'connectionName' => $query->connectionName,
                     'query'          => $query,
+                    'uri'            => $uri,
+                    'method'         => $method,
                 ];
 
                 $dumps   = new LaraDumps();
@@ -60,6 +64,20 @@ class QueryObserver
             } catch (\Throwable) {
             }
         });
+    }
+
+    public function getRequest(): array
+    {
+        $request = request();
+
+        if (null !== $qs = $request->getQueryString()) {
+            $qs = '?' . $qs;
+        }
+
+        return [
+            str($request->getPathInfo() . $qs)->ltrim('/')->toString(),
+            $request->getMethod(),
+        ];
     }
 
     public function enable(?string $label = null): void
@@ -87,8 +105,8 @@ class QueryObserver
         return boolval(Config::get('observers.queries', false));
     }
 
-    private function onlyDuplicated()
+    private function onlyDuplicated(): bool
     {
-        return Config::get('queries.only_duplicated', false);
+        return boolval(Config::get('queries.only_duplicated', false));
     }
 }
