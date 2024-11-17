@@ -51,6 +51,10 @@ class InitCommand extends Command
             $default = Yaml::parseFile($defaultYaml);
 
             foreach ($default as $key => $values) {
+                /**
+                 * @var string $key1
+                 * @var array $values
+                 */
                 foreach ($values as $key1 => $value) {
                     $default[$key][$key1] = $value;
                 }

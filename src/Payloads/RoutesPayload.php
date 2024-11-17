@@ -28,6 +28,7 @@ class RoutesPayload extends Payload
         foreach (\Route::getRoutes()->getIterator() as $route) {
             $ignore = false;
 
+            /** @var string $except */
             foreach (Arr::wrap($this->except) as $except) {
                 if (Str::contains($route->uri, $except)) {
                     $ignore = true;

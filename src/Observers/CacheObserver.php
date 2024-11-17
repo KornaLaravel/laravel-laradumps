@@ -118,8 +118,7 @@ class CacheObserver
     private function formatValue(mixed $event): mixed
     {
         return (!$this->shouldHideValue($event))
-            /* @phpstan-ignore-next-line */
-            ? $event->value
+            ? $event->value // @phpstan-ignore-line
             : '********';
     }
 
@@ -127,17 +126,15 @@ class CacheObserver
     {
         return Str::is(
             $this->hidden(),
-            /* @phpstan-ignore-next-line */
-            $event->key
+            $event->key // @phpstan-ignore-line
         );
     }
 
     protected function formatExpiration(KeyWritten $event): mixed
     {
-        return property_exists($event, 'seconds')
+        return property_exists($event, 'seconds') // @phpstan-ignore-line
             ? $event->seconds
-            /* @phpstan-ignore-next-line */
-            : $event->minutes * 60;
+            : $event->minutes * 60; // @phpstan-ignore-line
     }
 
     private function shouldIgnore(mixed $event): bool
@@ -148,8 +145,7 @@ class CacheObserver
                 'framework/schedule*',
                 'telescope:*',
             ],
-            /* @phpstan-ignore-next-line */
-            $event->key
+            $event->key // @phpstan-ignore-line
         );
     }
 }

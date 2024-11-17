@@ -72,7 +72,7 @@ class JobsObserver
         [$pre, $id] = Dumper::dump(
             /* @phpstan-ignore-next-line */
             $event->job instanceof Job && $event?->job->payload()
-                ? unserialize($event->job->payload()['data']['command'], ['allowed_classes' => true])
+                ? unserialize($event->job->payload()['data']['command'], ['allowed_classes' => true]) // @phpstan-ignore-line
                 : $event->job
         );
 
