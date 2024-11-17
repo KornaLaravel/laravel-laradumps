@@ -26,8 +26,8 @@ class GateObserver
                 return;
             }
 
-            $dumps = new LaraDumps();
-            $user  = $event->user;
+            $dump = new LaraDumps();
+            $user = $event->user;
 
             $payload = new TableV2Payload([
                 'Ability'   => $event->ability,
@@ -38,11 +38,13 @@ class GateObserver
                 'User' => Dumper::dump($user instanceof Authenticatable ? $user->toArray() : null)[0],
             ]);
 
-            $dumps->send($payload);
+            $dump->send($payload);
 
             if (!empty($this->label)) {
-                $dumps->label($this->label);
+                $dump->label($this->label);
             }
+
+            $dump->toScreen('Gate');
         });
     }
 
