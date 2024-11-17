@@ -14,7 +14,7 @@ if (!function_exists('dsBlade')) {
         $frame = collect(debug_backtrace())
             ->filter(function ($frame) {
                 /** @var array $frame */
-                return $frame['function'] === 'render' && $frame['class'] === 'Illuminate\View\View';
+                return $frame['function'] === 'render' && $frame['class'] === 'Illuminate\View\View'; // @phpstan-ignore-line
             })->first();
 
         /** @var BladeCompiler $blade

@@ -17,10 +17,10 @@ class MailPayload extends Payload
     {
         $sentMessage = $sentMessage->getOriginalMessage();
 
-        /** @phpstan-ignore-next-line */
-        $html = strval($sentMessage->getHtmlBody());
-        /** @phpstan-ignore-next-line */
-        $attachments = $sentMessage->getAttachments();
+        $html = strval($sentMessage->getHtmlBody()); // @phpstan-ignore-line
+
+        /** @var array $attachments */
+        $attachments = $sentMessage->getAttachments(); // @phpstan-ignore-line
 
         $dataPartsData = [];
 
@@ -29,8 +29,7 @@ class MailPayload extends Payload
             $reflection = new ReflectionClass($dataPart);
 
             $reflectionParent = $reflection->getParentClass();
-            /** @phpstan-ignore-next-line */
-            $bodyProperty = $reflectionParent->getProperty('body');
+            $bodyProperty     = $reflectionParent->getProperty('body'); // @phpstan-ignore-line
 
             /** @var string|File $body */
             $body = $bodyProperty->getValue($dataPart);
@@ -61,8 +60,7 @@ class MailPayload extends Payload
             'html'        => $html,
             'details'     => $details,
             'attachments' => $dataPartsData,
-            /** @phpstan-ignore-next-line */
-            'headers' => $sentMessage->getHeaders()->toArray(),
+            'headers'     => $sentMessage->getHeaders()->toArray(), // @phpstan-ignore-line
         ];
     }
 

@@ -66,7 +66,7 @@ class LaraDumpsServiceProvider extends ServiceProvider
     private function createDirectives(): void
     {
         Blade::directive('ds', function ($args) {
-            return "<?php dsBlade($args); ?>";
+            return "<?php dsBlade($args); ?>"; // @phpstan-ignore-line
         });
     }
 

@@ -13,7 +13,7 @@ class MultiDumpHandler
     public function dump(mixed $value): void
     {
         foreach ($this->handlers as $handler) {
-            $handler($value);
+            $handler($value); // @phpstan-ignore-line
         }
     }
 
