@@ -15,7 +15,7 @@ use LaraDumps\LaraDumpsCore\Payloads\TableV2Payload;
 
 class GateObserver
 {
-    protected ?string $label = null;
+    protected ?string $label = 'Gate';
 
     private bool $enabled = false;
 
@@ -34,8 +34,8 @@ class GateObserver
                 'Result'    => $this->gateResult($event->result),
                 'Arguments' => Dumper::dump(collect($event->arguments)->map(function ($argument) {
                     return $argument instanceof Model ? $this->formatModel($argument) : $argument;
-                })->toArray()),
-                'User' => Dumper::dump($user instanceof Authenticatable ? $user->toArray() : null),
+                })->toArray())[0],
+                'User' => Dumper::dump($user instanceof Authenticatable ? $user->toArray() : null)[0],
             ]);
 
             $dumps->send($payload);
@@ -48,7 +48,7 @@ class GateObserver
 
     public function enable(string $label = null): void
     {
-        $this->label = $label ?? 'Gate';
+        $this->label = $label;
 
         $this->enabled = true;
     }
