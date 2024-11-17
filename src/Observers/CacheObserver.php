@@ -77,12 +77,13 @@ class CacheObserver
             return;
         }
 
-        $dumps   = new LaraDumps();
+        $dump    = new LaraDumps();
         $payload = new TableV2Payload($data, $headerStyle);
 
-        $dumps->send($payload);
+        $dump->send($payload);
 
-        $dumps->label($this->label ?: $label);
+        $dump->label($this->label ?: $label);
+        $dump->toScreen('Cache');
     }
 
     public function enable(string $label = ''): void
