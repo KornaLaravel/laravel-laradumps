@@ -25,6 +25,7 @@ class MailObserver
 
             $dumps->send($payload);
             $dumps->label('Mail');
+            $dumps->s('Mail');
         });
 
         Event::listen(NotificationSent::class, function (NotificationSent $notificationSent) {
