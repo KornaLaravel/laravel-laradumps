@@ -68,12 +68,14 @@ class LogObserver
 
             $payload = new LogPayload($log);
 
-            /** @var \Exception $exception */
-            $exception = $context['exception'];
+            if (isset($message->context['exception'])) {
+                /** @var \Exception $exception */
+                $exception = $message->context['exception'];
 
-            $context = (new CodeSnippet(6, 6))->fromException($exception);
+                $context = (new CodeSnippet(6, 6))->fromException($exception);
 
-            $payload->setCodeSnippet($context);
+                $payload->setCodeSnippet($context);
+            }
 
             $dumps->send($payload);
 
