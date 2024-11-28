@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraDumps\LaraDumps\Tests\Models;
+namespace LaraDumps\LaraDumps\Tests\Support\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;

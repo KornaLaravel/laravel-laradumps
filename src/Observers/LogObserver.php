@@ -6,7 +6,7 @@ use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use LaraDumps\LaraDumps\Payloads\LogPayload;
-use LaraDumps\LaraDumpsCore\Actions\{Config, Dumper};
+use LaraDumps\LaraDumpsCore\Actions\{CodeSnippet, Config, Dumper};
 use LaraDumps\LaraDumpsCore\LaraDumps;
 
 class LogObserver
@@ -67,6 +67,13 @@ class LogObserver
             ];
 
             $payload = new LogPayload($log);
+
+            /** @var \Exception $exception */
+            $exception = $context['exception'];
+
+            $context = (new CodeSnippet(6, 6))->fromException($exception);
+
+            $payload->setCodeSnippet($context);
 
             $dumps->send($payload);
 
