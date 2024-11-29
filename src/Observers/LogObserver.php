@@ -6,8 +6,9 @@ use Illuminate\Log\Events\MessageLogged;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use LaraDumps\LaraDumps\Payloads\LogPayload;
-use LaraDumps\LaraDumpsCore\Actions\{CodeSnippet, Config, Dumper};
+use LaraDumps\LaraDumpsCore\Actions\{Config, Dumper};
 use LaraDumps\LaraDumpsCore\LaraDumps;
+use LaraDumps\LaraDumpsCore\Support\CodeSnippet;
 
 class LogObserver
 {
