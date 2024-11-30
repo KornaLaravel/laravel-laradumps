@@ -73,7 +73,7 @@ class LogObserver
                 /** @var \Exception $exception */
                 $exception = $message->context['exception'];
 
-                $context = (new CodeSnippet(6, 6))->fromException($exception);
+                $context = (new CodeSnippet())->fromException($exception);
 
                 $payload->setCodeSnippet($context);
             }
