@@ -30,6 +30,10 @@ class QueryObserver
                         $query->bindings
                     );
 
+                if (!$this->shouldProcessQuery($sql)) {
+                    return;
+                }
+
                 $duplicated = in_array($sql, $this->executedQueries);
 
                 $this->executedQueries[] = $sql;
@@ -108,5 +112,25 @@ class QueryObserver
     private function onlyDuplicated(): bool
     {
         return boolval(Config::get('queries.only_duplicated', false));
+    }
+
+    private function shouldProcessQuery(string $sql): bool
+    {
+        $sql = str($sql)->trim()->upper();
+
+        $queryStatement = [
+            'SELECT' => (bool) Config::get('queries.select', true),
+            'INSERT' => (bool) Config::get('queries.insert', true),
+            'UPDATE' => (bool) Config::get('queries.update', true),
+            'DELETE' => (bool) Config::get('queries.delete', true),
+        ];
+
+        foreach ($queryStatement as $type => $isEnabled) {
+            if (str($sql)->startsWith($type)) {
+                return $isEnabled;
+            }
+        }
+
+        return true;
     }
 }
